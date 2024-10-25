@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace: 설정된 패키지명.클래스명은 실제 정의된 mapper인터페이스의 경로임 -->
+<mapper namespace="com.hk.board.mapper.CalMapper">
+	
+	<!-- id속성: mapper인터페이스의 메서드명과 일치 -->
+	<insert id="insertCalBoard" parameterType="CalDto">
+		INSERT INTO calboard
+		VALUES(NULL,#{id},#{title},#{content},#{mdate},SYSDATE())
+	</insert>
+	
+	<select id="calBoardList" parameterType="Map" resultType="CalDto">
+		SELECT SEQ, ID, TITLE, CONTENT, MDATE, REGDATE
+		FROM CALBOARD
+		WHERE SUBSTRING(MDATE,1,8) = #{yyyyMMdd}
+		AND ID=#{id}
+	</select>
+	
+	<delete id="calMulDel" parameterType="Map">
+		DELETE FROM CALBOARD WHERE SEQ IN
+		<foreach collection="seqs" item="seq" open="(" close=")"
+		                                      separator="," >
+			#{seq}
+		</foreach>
+	</delete>
+	
+	<select id="calBoardDetail" parameterType="int" resultType="CalDto">      
+		SELECT SEQ, ID, TITLE, CONTENT, MDATE, REGDATE
+		FROM CALBOARD
+		WHERE SEQ=#{seq}
+	</select>
+	
+	<update id="calBoardUpdate" parameterType="CalDto">
+		UPDATE CALBOARD
+		SET TITLE=#{title}, CONTENT=#{content},
+		MDATE=#{mdate}, REGDATE=SYSDATE()
+		WHERE SEQ=#{seq}
+	</update>
+	<select id="calViewList" parameterType="Map" resultType="CalDto">
+		SELECT SEQ, ID, TITLE, CONTENT, MDATE, REGDATE
+		FROM 
+			(SELECT ROW_NUMBER() OVER(PARTITION BY SUBSTR(MDATE,1,8)  ORDER BY MDATE) RN , 
+			       SEQ, ID, TITLE, CONTENT, MDATE, REGDATE
+			FROM CALBOARD
+			WHERE SUBSTRING(MDATE,1,6) = #{yyyyMM}
+			AND ID=#{id}) CAL
+		WHERE RN BETWEEN 1 AND 3
+	</select>
+	<select id="calBoardCount" parameterType="Map" resultType="int">
+		SELECT COUNT(*) FROM CALBOARD WHERE ID=#{id} AND SUBSTR(MDATE,1,8)=#{yyyyMMdd}
+	</select>
+</mapper>

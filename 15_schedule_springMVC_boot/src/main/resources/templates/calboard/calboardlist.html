@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+	function isConfirm(){
+		if(confirm("정말 삭제 하시겠습니까?")){
+			return true;
+		}
+		return false;
+	}
+</script>
+</head>
+<body>
+<div layout:fragment="content">
+	<div id="container">
+		<form th:action="@{/schedule/calmuldel}" method="post" 
+		      th:object="${deleteCalCommand}"  onsubmit="return isConfirm()">
+			<table class="table">
+<!-- 				일정날짜추가 -->
+				<caption>
+					<span th:text="${session.ymd.year}"></span>
+				    <span th:text="${session.ymd.month}"></span>
+				    <span th:text="${session.ymd.date}"></span>
+				</caption>
+				<col width="50px">
+				<col width="200px">
+				<col width="300px">
+				<col width="200px">
+				<tr>
+					<th><input type="checkbox" name="all" /></th>
+					<th>일정</th>
+					<th>제목</th>
+					<th>작성일</th>
+				</tr>
+				<th:block th:if="${#lists.isEmpty(list)}">
+					<tr>
+						<td colspan="4" style="text-align: center">
+							일정이 없습니다.
+						</td>
+					</tr>
+				</th:block>
+				<th:block th:unless="${#lists.isEmpty(list)}">
+					<tr th:each="dto:${list}">
+						<td><input type="checkbox" name="seq" th:value="${dto.seq}"/></td>
+						<td th:text="${@util.toDates(dto.mdate)}"></td>
+						<td>
+							<a th:href="@{/schedule/calboarddetail(seq=${dto.seq})}" th:text="${dto.title}"></a>
+						</td>
+						<td th:text="${#dates.format(dto.regdate,'yyyy-MM-dd')}"></td>
+					</tr>
+				</th:block>
+				<tr>
+					<td colspan="4">                   
+						<button type="submit" title="일정삭제" class="btn btn-default" >
+						  <span class="glyphicon glyphicon-trash" ></span>
+						</button>
+						<button type="button" title="달력보기" class="btn btn-default" 
+								th:onclick="|location.href='@{/schedule/calendar(year=${session.ymd.year},month=${session.ymd.month})}'|">
+						  <span class="glyphicon glyphicon-calendar" ></span>
+						</button>
+						<span class="errorField" th:if="${#fields.hasErrors('seq')}"
+						                         th:errors="*{seq}"></span>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+
+
+</body>
+</html>
