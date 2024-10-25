@@ -1,4 +1,4 @@
-<%@page import="com.hk.board.dtos.HkDto"%>
+<%@page import="com.hk.board.dtos.UserDto"%>
 <%@page import="java.util.List"%>
 <%@page import="com.hk.board.daos.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -13,7 +13,7 @@
 //java 실행부
 	//DB에 접근하려면 어떤 객체가 필요할까
 	UserDao dao=new UserDao();
-	List<HkDto>lists=dao.getAllUser();//회원목록 가져오기
+	List<UserDto>lists=dao.getAllUser();//회원목록 가져오기
 %>
 <body>
 <h1>회원 조회 결과</h1>
@@ -23,7 +23,7 @@
 	</tr>
 	<%
 	for(int i=0;i<lists.size();i++){
-		HkDto dto=lists.get(i);
+		UserDto dto=lists.get(i);
 	%>
 	<tr>
 		<td><%=dto.getUserID()%></td>

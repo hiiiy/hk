@@ -1,4 +1,4 @@
-<%@page import="com.hk.board.dtos.HkDto"%>
+<%@page import="com.hk.board.dtos.UserDto"%>
 <%@page import="com.hk.board.daos.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -19,7 +19,7 @@ response.setContentType("text/html;charset=UTF-8");
 	String userId=request.getParameter("userId");
 	//전달받은 ID에 해당하는 회원의 정보를 조회
 	UserDao dao=new UserDao();
-	HkDto dto=dao.getUser(userId);
+	UserDto dto=dao.getUser(userId);
 %>
 <body>
 <h1>회원정보수정</h1>

@@ -1,4 +1,4 @@
-<%@page import="com.hk.board.dtos.HkDto"%>
+<%@page import="com.hk.board.dtos.UserDto"%>
 <%@page import="com.hk.board.daos.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -27,7 +27,7 @@ response.setContentType("text/html;charset=UTF-8");
 	String height=request.getParameter("height");
 	int heightInt=Integer.parseInt(height);//String -> int
 	UserDao dao=new UserDao();
-	boolean isS=dao.updateUser(new HkDto(userId,name,birthYearInt,addr,mobile1,mobile2,heightInt,null));
+	boolean isS=dao.updateUser(new UserDto(userId,name,birthYearInt,addr,mobile1,mobile2,heightInt,null));
 	if(isS){
 %>
 		<script type="text/javascript">
