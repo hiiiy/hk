@@ -11,7 +11,6 @@
 <body>
 <h1>글 추가하기</h1>
 <form action="insertboard.do" method="post">
-<!-- <input type="hidden" name="command" value="insertboard"/> -->
 	<table border="1">
 		<tr>
 			<th>작성자(ID)</th>

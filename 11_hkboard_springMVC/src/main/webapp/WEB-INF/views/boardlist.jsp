@@ -4,9 +4,13 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@taglib uri="" %> --%>
-<%request.setCharacterEncoding("utf-8"); %>
-<%response.setContentType("text/html;charset=UTF-8"); %>  
+<%
+request.setCharacterEncoding("utf-8");
+%>
+<%
+response.setContentType("text/html;charset=UTF-8");
+%>  
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,11 +28,6 @@
 </style>
 </head>
 <%
-//  requestScope에 저장될때는 Object타입으로 자동 변환됨
-//  --> 다운캐스팅이 필요함
-// 	Object obj=request.getAttribute("lists");
-// 	List<HkDto> lists=(List<HkDto>)obj;
-
 	List<HkDto> lists=(List<HkDto>)request.getAttribute("list");
 %>
 <body>
@@ -48,8 +47,8 @@
 		<th>번호</th><th>작성자</th><th>제목</th><th>작성일</th>
 	</tr>
 	<%
-		for(HkDto dto:lists){
-			%>
+			for(HkDto dto:lists){
+	%>
 			<tr>
 				<td><input type="checkbox" name="chk" value="<%=dto.getSeq()%>"/></td>
 				<td><%=dto.getSeq()%></td>
@@ -108,11 +107,13 @@
 		return false;//취소버튼 클릭했을 경우 전송되면 안되니깐 false반환
 	}
 </script>
+<%-- <%//실행부 %> --%>
+<%-- <%=//표현부 %> --%>
 <%!//선언부:메서드 선언하기
 	public String toDates(Date regdate){
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 	 return sdf.format(regdate);
-	}
-%>
+	}%>
+
 </body>
 </html>
