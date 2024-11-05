@@ -22,6 +22,7 @@
 	
 	//onload 기능: 페이지가 로딩되면 실행
 	$(function(){
+		alert("할로")
 		getBoardList();//페이지실행되자마자 바로 글목록 보여주기 실행
 	});
 	
@@ -121,7 +122,6 @@
 		
 		//body에 글추가폼 보여주기
 		$("#boardlist").html(insertForm);
-		
 	}
 	//글추가하기
 	function insertBoard(){
